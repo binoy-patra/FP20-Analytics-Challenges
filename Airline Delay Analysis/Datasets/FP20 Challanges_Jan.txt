@@ -1,0 +1,19 @@
+1. What are the busiest months and airports for flights?
+
+2. Which months experience the highest delay rates?
+
+3. How do delay patterns vary across different airlines?
+
+4. What are the primary causes of delays (e.g., carrier reasons, weather, late aircraft)?
+
+5. Which airports are most affected by weather-related delays?
+
+6. How do delays differ between peak and off-peak seasons?
+
+7. Are there geographical patterns in delay occurrences (e.g., coastal vs. inland airports)?
+
+8. Do certain regions experience higher delays due to weather conditions?
+
+9. What percentage of total flights experience delays of over 15 minutes?
+
+10. Are there airports or airlines with significantly better on-time performance?
