@@ -1,0 +1,97 @@
+Pages 
+1. Stock Analysis & Inventory Levels
+2. Supplier & Restocking Performance
+3. Warehouse & Geographic Insights
+4. Cost and Pricing Analysis
+
+KPI Ideas
+1. Total Products 
+2. Total Suppliers 
+3. Total Category 
+4. Total Warehouse 
+5. Total Country 
+6. Product in Stock 
+7. Product out of Stock
+8. Stock Quantity 
+9. Total and Average Inventory Value 
+10. Inventory Turnover 
+11. Avg Lead Time (Days) 
+12. Products Below Reorder Point
+13. Minimum Order Quantity for Restocking 
+14. Supplier Reorders 
+15. Supplier Inventory Value 
+16. Avg Restock Interval 
+17. Fresh Stock 
+18. Aging Stock 
+19. Old Stock 
+20. Obstacle Stocks 
+21. Avg Time since Last Restock 
+22. Stock Quantity 
+23. Avg. Stock Price 
+24. Turnover Rate 
+
+
+
+1. Total Products = DISTINCTCOUNT('Inventory Management'[Product_ID])
+2. Total Suppliers = DISTINCTCOUNT('Inventory Management'[Supplier_ID])
+3. Total Category = DISTINCTCOUNT('Inventory Management'[Category])
+4. Total Warehouse = DISTINCTCOUNT('Inventory Management'[Warehouse_Location])
+5. Total Country = DISTINCTCOUNT('Inventory Management'[Country])
+6. Product in Stock = CALCULATE(COUNTROWS(Inventory), 'Inventory Management'[Status] = "Active" && 'Inventory Management'[Stock_Quantity] > 0)
+7. Product out of Stock = CALCULATE(COUNTROWS(Inventory), 'Inventory Management'[Status] = "Active" && 'Inventory Management'[Stock_Quantity] = 0)
+8. Stock Quantity = SUM('Inventory Management'[Stock_Quantity])
+9. Total Inventory Value = SUMX('Inventory Management', 'Inventory Management'[Unit_Price] * 'Inventory Management'[Stock_Quantity])
+9.1. Average Inventory Value = AVERAGEX('Inventory Management', 'Inventory Management'[Unit_Price] * 'Inventory Management'[Stock_Quantity])
+10. Inventory Turnover = 
+DIVIDE(
+    SUM('Inventory Management'[Stock_Quantity]),
+    SUM('Inventory Management'[Lead_Time_Days])
+)
+11. Avg Lead Time (Days) = AVERAGE('Inventory Management'[Lead_Time_Days])
+12. Products Below Reorder Point = COUNTROWS(FILTER('Inventory Management', 'Inventory Management'[Stock_Quantity] < 'Inventory Management'[Reorder_Point]))
+13. Minimum Order Quantity for Restocking = 
+SUMX(
+    FILTER('Inventory Management', 'Inventory Management'[Stock_Quantity] < 'Inventory Management'[Reorder_Point]),
+    'Inventory Management'[Min_Order_Quantity]
+)
+14. Supplier Reorders = 
+COUNTROWS(FILTER('Inventory Management', 'Inventory Management'[Stock_Quantity] < 'Inventory Management'[Reorder_Point]))
+
+15. Supplier Inventory Value = 
+SUMX(
+    'Inventory Management',
+    'Inventory Management'[Unit_Price] * 'Inventory Management'[Stock_Quantity]
+)
+16. Avg Restock Interval = 
+AVERAGEX('Inventory Management', DATEDIFF('Inventory Management'[Last_Restock_Date], TODAY(), DAY))
+
+17. Fresh Stock = COUNTROWS(FILTER('Inventory Management', DATEDIFF('Inventory Management'[Last_Restock_Date], TODAY(), DAY) <= 30))
+18. Aging Stock = COUNTROWS(FILTER('Inventory Management', DATEDIFF('Inventory Management'[Last_Restock_Date], TODAY(), DAY) > 30 && DATEDIFF('Inventory Management'[Last_Restock_Date], TODAY(), DAY) <= 90))
+19. Old Stock = COUNTROWS(FILTER('Inventory Management', DATEDIFF('Inventory Management'[Last_Restock_Date], TODAY(), DAY) > 90))
+20. Obstacle Stocks = 
+COUNTROWS(FILTER('Inventory Management', 
+    'Inventory Management'[Stock_Quantity] > 0 && 
+    'Inventory Management'[Status] = "Discontinued"
+))
+21. Avg Time since Last Restock = 
+AVERAGEX(
+    FILTER('Inventory Management', 'Inventory Management'[Stock_Quantity] > 0),
+    DATEDIFF('Inventory Management'[Last_Restock_Date], TODAY(), DAY)
+)
+23. Avg. Stock Price = AVERAGE('Inventory Management'[Unit_Price])
+24. Turnover Rate = 
+DIVIDE(
+    SUM('Inventory Management'[Stock_Quantity]),
+    SUM('Inventory Management'[Lead_Time_Days])
+)
+
+25. Reorder Compliance = 
+DIVIDE(
+  COUNTROWS(FILTER('Inventory Management', 
+    'Inventory Management'[Stock_Quantity] <= 'Inventory Management'[Reorder_Point] &&
+    'Inventory Management'[Last_Restock_Date] >= TODAY() - 30
+  )),
+  COUNTROWS(FILTER('Inventory Management', 
+    'Inventory Management'[Stock_Quantity] <= 'Inventory Management'[Reorder_Point]
+  ))
+)
