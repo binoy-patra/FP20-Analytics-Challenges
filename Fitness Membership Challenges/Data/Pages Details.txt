@@ -1,0 +1,45 @@
+Pages: 
+1. Executive Summary
+2. Membership & Engagement Analysis
+3. Revenue, Discounts & Location Performance
+
+
+
+
+Page 1 – Executive Summary
+Purpose: Quick at-a-glance overview for decision-makers.
+KPIs:
+
+  Total Members
+  Active Members (last 30 days)
+  Average Visits/Week
+  Avg Duration in Gym (minutes)
+  Total Revenue (sum of final\_price)
+  Retention Rate (%)
+Membership Revenue & Count by Type (Bar/Column)
+Top Performing Locations (Map or Table with revenue & visits)
+Monthly New Member Trend (Join Date)
+
+Answers covered: High-level view for Which membership types bring highest revenue?, Location performance, Retention.
+
+Page 2 – Membership & Engagement Analysis
+Purpose: Understand member behavior, retention, and engagement patterns.
+
+Retention Rate by Membership Type (Bar chart)
+Visit Frequency by Access Hours Type (Bar/Column)
+Engagement by Service Usage (Group class attendance, Personal training, Sauna usage)
+Tenure vs Service Usage (Scatter or Line)
+Churn Risk Indicators (e.g., members who haven’t visited in 60+ days)
+
+Answers covered: Membership type vs retention, Access type impact on visits, PT usage effect, Tenure vs upgrade/service usage, Potential churn risks.
+
+Page 3 – Revenue, Discounts & Location Performance
+Purpose: Explore revenue drivers, pricing impact, and geographic trends.
+
+Final Price vs Discount Type (Bar)
+Discount Impact on Revenue (Promo, Loyalty, Student)
+Subscription Model (Monthly vs Annual) vs Churn (Bar with churn %)
+Revenue by Location (Map with bubbles sized by revenue)
+Multi-location Access & Geographic Patterns (Map or Matrix)
+
+Answers covered: Pricing models & churn, Discount type effect, Location performance, Geographic behavior patterns.

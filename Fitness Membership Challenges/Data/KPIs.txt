@@ -1,0 +1,143 @@
+-- 1. Total Members
+Total Members = DISTINCTCOUNT(data[member_id])
+
+-- 2. Active Members (last 30 days)
+Active Members (30 Days) =
+CALCULATE(
+    DISTINCTCOUNT(data[member_id]),
+    FILTER(data, TODAY() - data[last_visit_date] <= 30)
+)
+
+-- 3. Retention Rate (%)
+Retention Rate % =
+DIVIDE(
+    [Active Members (30 Days)],
+    [Total Members],
+    0
+)
+
+-- 4. Average Visits per Week
+Average Visits/Week = AVERAGE(data[visit_per_week])
+
+-- 5. Total Revenue
+Total Revenue =
+CALCULATE(
+    SUM(data[final_price]),
+    VALUES(data[member_id])
+)
+
+
+-- 1. Highest Retention Membership Type
+Highest Retention Membership Type =
+VAR SummaryTable =
+    ADDCOLUMNS(
+        SUMMARIZE(data, data[membership_type]),
+        "RetentionRate",
+            DIVIDE(
+                CALCULATE(
+                    DISTINCTCOUNT(data[member_id]),
+                    FILTER(data, TODAY() - data[last_visit_date] <= 30)
+                ),
+                CALCULATE(DISTINCTCOUNT(data[member_id]))
+            )
+    )
+RETURN
+MAXX(SUMMARYTABLE, [RetentionRate]) -- Returns value; for label use TOPN
+
+-- 2. Avg Duration in Gym (Minutes)
+Avg Duration (Minutes) = AVERAGE(data[duration_in_gym_minutes])
+
+-- 3. % Group Class Attendance
+% Group Class Attendance =
+DIVIDE(
+    CALCULATE(
+        DISTINCTCOUNT(data[member_id]),
+        data[attend_group_lesson] = TRUE
+    ),
+    [Total Members],
+    0
+)
+
+-- 4. % Personal Training Usage
+% Personal Training Usage =
+DIVIDE(
+    CALCULATE(
+        DISTINCTCOUNT(data[member_id]),
+        data[personal_training] = TRUE
+    ),
+    [Total Members],
+    0
+)
+
+-- 5. Churn Risk Members (no visit > 60 days)
+Churn Risk Members =
+CALCULATE(
+    DISTINCTCOUNT(data[member_id]),
+    FILTER(data, TODAY() - data[last_visit_date] > 60)
+)
+
+
+
+
+-- 1. Average Final Price per Member
+Average Final Price/Member =
+DIVIDE(
+    CALCULATE(SUM(data[final_price]), VALUES(data[member_id])),
+    [Total Members],
+    0
+)
+
+-- 2. Highest Revenue Location
+Highest Revenue Location =
+VAR SummaryTable =
+    ADDCOLUMNS(
+        SUMMARIZE(data, data[home_gym_location]),
+        "Revenue", CALCULATE(SUM(data[final_price]), VALUES(data[member_id]))
+    )
+RETURN
+MAXX(SummaryTable, [Revenue]) -- For label, use TOPN
+
+-- 3. % Members with Discount
+% Members with Discount =
+DIVIDE(
+    CALCULATE(
+        DISTINCTCOUNT(data[member_id]),
+        data[discount_type] <> "None"
+    ),
+    [Total Members],
+    0
+)
+
+-- 4. Revenue from Discounted Members
+Revenue from Discounted Members =
+CALCULATE(
+    SUM(data[final_price]),
+    FILTER(data, data[discount_type] <> "None"),
+    VALUES(data[member_id])
+)
+
+-- 5. Multi-location Access Members (%)
+% Multi-location Access Members =
+DIVIDE(
+    DISTINCTCOUNT(FILTER(data, data[multi_location_access] = TRUE)[member_id]),
+    [Total Members],
+    0
+)
+
+
+
+-- Average Discount Rate
+Average Discount Rate = AVERAGE(data[discount_rate])
+
+-- Average Subscription Price
+Average Subscription Price = AVERAGE(data[subscription_price])
+
+-- Average Final Price
+Average Final Price = AVERAGE(data[final_price])
+
+-- Average Duration in Gym
+Average Duration (Minutes) = AVERAGE(data[duration_in_gym_minutes])
+
+-- Average Visits per Week
+Average Visits/Week = AVERAGE(data[visit_per_week])
+

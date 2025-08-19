@@ -1,0 +1,26 @@
+Page Names:
+1. Executive Summary
+2. Membership & Engagement Analysis
+3. Revenue, Discounts & Location Performance
+
+Kpis: 
+1. Total Members
+2. Active Members (30 Days)
+3. Retention Rate (%)
+4. Average Visits per Week
+5. Total Revenue
+6. Highest Retention Membership Type
+7. Avg Duration in Gym (Minutes)
+8. % Group Class Attendance
+9. % Personal Training Usage
+10. Churn Risk Members
+11. Average Final Price per Member
+12. Highest Revenue Location
+13. % Members with Discount
+14. Revenue from Discounted Members
+15. % Multi-location Access Members
+16. Average Discount Rate
+17. Average Subscription Price
+18. Average Final Price
+19. Average Duration in Gym
+20. Average Visits per Week
